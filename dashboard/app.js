@@ -9,21 +9,16 @@ const firebaseConfig = {
   measurementId: "G-0GH1H8L6WX"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Get a reference to the database service
 var database = firebase.database();
 
-// Get a reference to the authentication service
 var auth = firebase.auth();
 
-// Function to fetch data from Firebase and update UI for a specific user
 function fetchDataAndUpdateUI(userId) {
   var c = document.getElementById('app');
-  c.innerHTML = ""; // Clear existing UI
+  c.innerHTML = ""; 
 
-  // Fetch data from Firebase for the specified user
   database.ref('items').orderByChild('userId').equalTo(userId).once('value', function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
       var data = childSnapshot.val();
@@ -42,7 +37,6 @@ function fetchDataAndUpdateUI(userId) {
       editButton.onclick = function() {
         var newText = prompt('Enter new text:', data.text);
         if (newText !== null) {
-          // Update data in Firebase
           database.ref('items/' + key).update({ text: newText });
         }
       };
@@ -59,10 +53,9 @@ function fetchDataAndUpdateUI(userId) {
   });
 }
 
-// Listen for authentication state changes
 auth.onAuthStateChanged(function(user) {
   if (user) {
-    var userId = user.uid; // Fetch the user ID from the authenticated user
+    var userId = user.uid; 
     fetchDataAndUpdateUI(userId);
   } else {
     console.log("No user is signed in.");
@@ -73,20 +66,18 @@ function createElem() {
   var r = document.getElementById('myinput');
   var text = r.value;
 
-  // Get the currently authenticated user
   var user = auth.currentUser;
 
   if (user) {
-    var userId = user.uid; // Fetch the user ID from the authenticated user
-    // Push new data to Firebase with the user's ID
+    var userId = user.uid; 
     database.ref('items').push({
       userId: userId,
       text: text
     });
 
-    r.value = ''; // Clear input field
+    r.value = ''; 
   } else {
-    console.log("No user is signed in."); // Handle the case when no user is signed in
+    console.log("No user is signed in."); 
   }
 }
 

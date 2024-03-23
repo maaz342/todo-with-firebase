@@ -42,13 +42,14 @@ h1 {
 
 button {
     padding: 8px 20px;
-    border-radius: 5px;
+    border-radius: 20px;
     border: none;
     cursor: pointer;
     background-color: #4CAF50;
     color: white;
     width: 30%;
     margin-right: 10px;
+    margin-left: 20px;
     margin-top: 20px;
 
 }
